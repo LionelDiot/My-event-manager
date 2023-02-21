@@ -20,7 +20,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('participations')
     last_name: Faker::Name.last_name,
     description: Faker::Hipster.paragraph,
     email: Faker::Lorem.word + '@yopmail.com',
-    encrypted_password: "123456"
+    password: "123456"
   )
   
 end
@@ -45,7 +45,7 @@ end
   )
 end
 
-20.times do 
+10.times do 
   participation = Participation.create!(
     user: User.all.sample,
     event: Event.all.sample

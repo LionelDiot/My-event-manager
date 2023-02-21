@@ -1,14 +1,27 @@
 <p style="color: green"><%= notice %></p>
-
-<h1>Users</h1>
-
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+<hr class="my-5">
+<h1 class=" text-center">Voici la liste des utilisateurs du site :</h1>
+<hr class="my-5">
+<div class="card-deck m-3 text-center">
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal"><%= user.first_name %> <%= user.last_name %></h4>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title pricing-card-title"><%= user.email %> </h4>
+            <div class="container-fluid mt-3 mb-4">
+              <%= user.description %>
+            </div>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary"><%= link_to "Voir sa page", user %></button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New user", new_user_path %>
+
+        

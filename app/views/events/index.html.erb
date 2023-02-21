@@ -1,14 +1,33 @@
 <p style="color: green"><%= notice %></p>
-
-<h1>Events</h1>
-
-<div id="events">
-  <% @events.each do |event| %>
-    <%= render event %>
-    <p>
-      <%= link_to "Show this event", event %>
-    </p>
-  <% end %>
+<hr class="my-5">
+<h1 class="text-center">Voici la liste des Evenements à venir :</h1>
+<hr class="my-5">
+<div class="card-deck  m-3">
+  <div class="row">
+    <% @events.each do |event| %>
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal text-center"><%= event.title %></h4>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Début:</strong> <%= event.start_date.strftime("%B %d, %Y at %I:%M %p") %></li>
+              <li><strong>Durée:</strong> <%= event.duration %> minutes</li>
+              
+              <li><strong>Prix:</strong> <%= event.price %></li>
+              <li><strong>Lieu:</strong> <%= event.location %></li>
+              <li><strong>Organisateur:</strong> <%= event.admin.first_name %> <%= event.admin.last_name %></li>
+            </ul>
+            
+          </div>
+          <div class="card-footer text-center">
+            <%= link_to "Voir la page de l'Evenement", event, class: "btn btn-lg btn-block btn-outline-primary " %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <%= link_to "New event", new_event_path %>
