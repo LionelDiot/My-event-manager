@@ -7,6 +7,6 @@ class Event < ApplicationRecord
   validates :location, presence: true
 
   belongs_to :admin, class_name: "User"
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user
 end
