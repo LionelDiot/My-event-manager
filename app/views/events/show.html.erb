@@ -1,10 +1,45 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @event %>
+<hr class="my-5">
+<h1 class="text-center">Bienvenue sur l'évenement : <%= @event.title %></h1>
+<hr class="my-5">
 
-<div>
-  <%= link_to "Edit this event", edit_event_path(@event) %> |
-  <%= link_to "Back to events", events_path %>
+<h2> Voici ses détails :</h2>
+<br>
 
-  <%= button_to "Destroy this event", @event, method: :delete %>
+<div class="row d-flex justify-content-between mx-auto">
+  <div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal text-center"><%= @event.title %></h4>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li><strong>Début:</strong> <%= @event.start_date.strftime('%d %B %Y à %Hh%M') %></li>
+          <li><strong>Durée:</strong> <%= @event.duration %> minutes</li>     
+          <li><strong>Prix:</strong> <%= @event.price %> $</li>
+          <li><strong>Lieu:</strong> <%= @event.location %></li>
+          <li><strong>Organisateur:</strong> <%= @event.admin.first_name %> <%= @event.admin.last_name %></li>
+        </ul>
+              
+      </div>
+        <div class="card-footer text-center">
+          <%= link_to "Voir la page de l'Organisateur", @event.admin, class: "btn btn-lg btn-block btn-outline-primary " %>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h4>Description : </h4>
+    <span> <%= @event.description %> </span>
+    <div class = " m-2">
+    <%= link_to "Retour à la liste des évenements",  events_path,  class: "btn btn-primary m-2" %>
+    <% if current_user == @event.admin%>
+    <%= link_to "Modifier l'evenement", edit_event_path(@event),  class: "btn btn-info m-2" %>
+    <%= button_to "Annuler l'evenement", @event, method: :delete, class: "btn btn-danger m-2" %>
+    <% end %>
+  </div>
+  </div>
 </div>
+
+  
+

@@ -1,10 +1,90 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @user %>
+<hr class="my-5">
+<h1 class="text-center">Bienvenue sur le profil de <%= @user.first_name %> <%= @user.last_name %> </h1>
+<hr class="my-5">
+<h2> Voici ses informations :</h2>
+<br>
+<ul>
+  <li><strong>Email :</strong> <%= @user.email %></li>
+  <li><strong>Description :</strong> <%= @user.description %> </li>
+  
+</ul>
 
+<br>
+
+
+<% if @user.organized_events.count == 0 %>
+<h2>Il/Elle n'a pas organisé d'évenements</h2>
+<% else %>
+ <h2> Voici ses évenements organisés :</h2>
+<br>
+<div class="card-deck  m-3">
+  <div class="row">
+  <% @user.organized_events.each do |event| %>
+  <div class="col-md-4">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal text-center"><%= event.title %></h4>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Début:</strong> <%= event.start_date.strftime('%d %B %Y à %Hh%M') %></li>
+            <li><strong>Durée:</strong> <%= event.duration %> minutes</li>
+              
+            <li><strong>Prix:</strong> <%= event.price %></li>
+            <li><strong>Lieu:</strong> <%= event.location %></li>
+            <li><strong>Organisateur:</strong> <%= event.admin.first_name %> <%= event.admin.last_name %></li>
+          </ul>
+            
+        </div>
+        <div class="card-footer text-center">
+            <%= link_to "Voir la page de l'Evenement", event, class: "btn btn-lg btn-block btn-outline-primary " %>
+        </div>
+      </div>
+  </div>
+  <% end %>
+  </div>
+  </div>
+<% end %>
+
+<br>
+
+<% if @user.participations.count == 0 %>
+<h2>Il/Elle n'a participé à aucun évenement</h2>
+<% else %>
+<h2> Voici les évenements où il participe :</h2>
+<br>
+
+<div class="card-deck  m-3">
+  <div class="row">
+ <% @user.participations.each do |participation| %> 
+  <div class="col-md-4">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal text-center"><%= participation.event.title %></h4>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Début:</strong> <%= participation.event.start_date.strftime('%d %B %Y à %Hh%M') %></li>
+            <li><strong>Durée:</strong> <%= participation.event.duration %> minutes</li>
+              
+            <li><strong>Prix:</strong> <%= participation.event.price %></li>
+            <li><strong>Lieu:</strong> <%= participation.event.location %></li>
+            <li><strong>Organisateur:</strong> <%= participation.event.admin.first_name %> <%= participation.event.admin.last_name %></li>
+          </ul>
+            
+        </div>
+        <div class="card-footer text-center">
+            <%= link_to "Voir la page de l'Evenement", participation.event, class: "btn btn-lg btn-block btn-outline-primary " %>
+        </div>
+      </div>
+  </div>
+  <% end %>
+  </div>
+  </div>
+<% end %>
+<br>
 <div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
+  <%= link_to "Retourner à la liste des utilisateurs", users_path %>
 </div>
+<br>

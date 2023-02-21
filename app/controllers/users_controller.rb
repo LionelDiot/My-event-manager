@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-
+  before_action :owner?, only: [:destroy, :edit, :update]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -25,7 +25,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
+        flash[:success] = " Ton profil a bien été créé !"
+        format.html { redirect_to user_url(@user) }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        flash[:success] = "Ton profil a bien été modifié !"
+        format.html { redirect_to user_url(@user) }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +54,8 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      flash[:danger] = "Le profil a bien été supprimé"
+      format.html { redirect_to users_url }
       format.json { head :no_content }
     end
   end
@@ -66,5 +69,13 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:email, :encrypted_password, :description, :first_name, :last_name)
+    end
+
+    def owner?
+      @user = User.find(params[:id])
+      unless current_user == @user
+        flash[:danger] = "Impossible vous n'êtes pas le propriétaire du compte !"
+        redirect_to "/"
+      end
     end
 end

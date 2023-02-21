@@ -1,10 +1,23 @@
-<h1>Editing user</h1>
+<div class="container-fluid mx-auto">
+ 
+  <h1>Modifie ici ton profil : </h1>
+<%= form_for @user, url: user_path(@user), method: :patch do |f| %>
+  <div class="form-group">
+    <%= f.label :first_name, "Prénom", class: "m-2"%>
+    <%= f.text_field :first_name, class: "form-control   ",  required: true, style: "width: 190px"  %>
+  </div>
 
-<%= render "form", user: @user %>
+  <div class="form-group ">
+    <%= f.label :last_name, "Nom de famille", class: "m-2" %>
+    <%= f.text_field :last_name, class: "form-control",  required: true, style: "width: 190px" %>
+  </div>
 
-<br>
+   <div class="form-group ">
+    <%= f.label :description, "Ta description", class: "m-2" %>
+    <%= f.text_area :description, class: "form-control ", style: "width: 500px" %>
+  </div>
 
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
-</div>
+  <%= f.submit "Enregistrer les modifications", class: "btn btn-primary mt-4 mr-4" %>
+  <%= link_to "Annuler", "/", class: "btn btn-secondary mt-4 ml-4" %>
+<% end %>
+

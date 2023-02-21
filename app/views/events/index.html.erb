@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <ul>
-              <li><strong>Début:</strong> <%= event.start_date.strftime("%B %d, %Y at %I:%M %p") %></li>
+              <li><strong>Début:</strong> <%= event.start_date.strftime('%d %B %Y à %Hh%M') %></li>
               <li><strong>Durée:</strong> <%= event.duration %> minutes</li>
               
               <li><strong>Prix:</strong> <%= event.price %></li>

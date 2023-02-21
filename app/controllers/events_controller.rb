@@ -1,9 +1,10 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, only: [:new, :create]
+  before_action :owner?, only: [:destroy, :edit, :update]
   # GET /events or /events.json
   def index
-    @events = Event.all
+    @events = Event.order(start_date: :asc).all
   end
 
   # GET /events/1 or /events/1.json
@@ -25,7 +26,8 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to event_url(@event), notice: "Event was successfully created." }
+        flash[:success] = "Ton evenement a bien été créé !"
+        format.html { redirect_to event_url(@event) }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,8 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to event_url(@event), notice: "Event was successfully updated." }
+        flash[:success] = "Ton évenement a bien été modifié !"
+        format.html { redirect_to event_url(@event)}
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +55,8 @@ class EventsController < ApplicationController
     @event.destroy
 
     respond_to do |format|
-      format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
+      flash[:success] = "Ton profil a bien été supprimé !"
+      format.html { redirect_to events_url }
       format.json { head :no_content }
     end
   end
@@ -65,6 +69,14 @@ class EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :user_id)
+      params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :admin)
+    end
+
+    def owner?
+      @event = Event.find(params[:id])
+      unless current_user == @event.admin
+        flash[:danger] = "Impossible vous n'êtes pas le propriétaire de l'evenement !"
+        redirect_to "/"
+      end
     end
 end
