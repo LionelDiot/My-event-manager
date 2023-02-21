@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>EventManager</title>
+    <title>My Event Manager</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,9 +13,13 @@
 
   <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <div class="container"><%= link_to "My Event Manager" , events_path , class: "navbar-brand" %></div>
+      <div class="container navbar-brand">
+      <%= link_to "My Event Manager" , events_path , class: "navbar-brand" %>
+      
+      </div>
 
       <div class="container">
+      
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,7 +54,7 @@
               
             
           </ul>
-        
+        <%= link_to "Créer un évenement" , new_event_path , class: "navbar-brand" %>
       </div>
       </div>
     </nav>
