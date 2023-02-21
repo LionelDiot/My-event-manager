@@ -1,9 +1,41 @@
-<h1>New event</h1>
 
-<%= render "form", event: @event %>
+<div class="container">
+ 
+  <h1>Créer ici un nouvel évenement : </h1>
+  <%= form_for @event do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
 
-<br>
+  <div class="form-group">
+    <%= f.label :start_date %>
+    <%= f.datetime_local_field :start_date, class: "form-control" %>
+  </div>
 
-<div>
-  <%= link_to "Back to events", events_path %>
+  <div class="form-group">
+    <%= f.label :duration %>
+    <%= f.number_field :duration, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :price %>
+    <%= f.number_field :price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :location %>
+    <%= f.text_field :location, class: "form-control" %>
+  </div>
+
+  <%= f.hidden_field :admin_id, value: current_user.id %>
+
+  <%= f.submit "Créer l'évenement", class: "btn btn-primary" %>
+<% end %>
+
 </div>
